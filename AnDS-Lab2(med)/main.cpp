@@ -249,3 +249,67 @@ private:
     Node<T>* tail_;
 };
 
+void findUnluckyNumbersAndPrint(int N) {
+    LinkedList<int> numbers;
+
+    for (int i = 1; i <= N; ++i) {
+        numbers.PushTail(i);
+    }
+
+    int step = 2;
+    int index = 0;
+
+    while (index < numbers.Size() && step <= N) {
+        numbers.RemoveEveryNth(step);
+        index++;
+        if (index < numbers.Size()) {
+            step = numbers[index];
+        }
+    }
+
+    for (std::size_t i = 0; i < numbers.Size(); ++i) {
+        std::cout << numbers[i] << " ";
+    }
+
+    std::cout << std::endl;
+}
+
+int main() {
+    try {
+        LinkedList<int> list;
+        list.PushTail(1);
+        list.PushTail(2);
+        list.PushTail(3);
+        list.PushHead(0);
+
+        std::cout << "Original List: " << list << std::endl;
+
+        list.PopHead();
+        list.PopTail();
+
+        std::cout << "List after PopHead and PopTail: " << list << std::endl;
+
+        LinkedList<int> anotherList;
+        anotherList.PushTail(4);
+        anotherList.PushTail(5);
+        anotherList.PushTail(6);
+
+        list.PushTail(anotherList);
+
+        std::cout << "List after PushTail with anotherList: " << list << std::endl;
+
+        std::cout << "Element at index 1: " << list[1] << std::endl;
+
+        list.RemoveEveryNth(2);
+
+        std::cout << "List after RemoveEveryNth(2): " << list << std::endl;
+
+        findUnluckyNumbersAndPrint(10);
+
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
